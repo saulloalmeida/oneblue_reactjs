@@ -1,24 +1,27 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { api } from "../services/api";
 import { Alert } from "./Alert";
+
 interface IFormInputs {
   email: string;
   password: string;
   passwordConfirmation: string;
 }
 
+//validação do formulário com Yup
 const schema = yup
   .object({
     email: yup
       .string()
       .email("Email inválido")
       .required("Preenchimento do email é obrigatório"),
-      password: yup.string().required("Preenchimento da senha é obrigatório").min(6, "A senha precisa ter no minimo 6 caracteres"),
+    password: yup
+      .string()
+      .required("Preenchimento da senha é obrigatório")
+      .min(6, "A senha precisa ter no minimo 6 caracteres"),
     passwordConfirmation: yup
       .string()
       .required("A confirmação da senha é obrigatória")
@@ -27,7 +30,6 @@ const schema = yup
   .required();
 
 export function Cadastro() {
-
   const {
     register,
     handleSubmit,
@@ -35,13 +37,16 @@ export function Cadastro() {
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
-  
+
+  //Envio dados para a api.
   async function onSubmit(data: IFormInputs) {
-    await api.post('user/cadaster',{
-      name:data.email,
-      password:data.password
-    }).then((res)=>console.log("ok",res))
-  } 
+    await api
+      .post("user/cadaster", {
+        name: data.email,
+        password: data.password,
+      })
+      .then((res) => console.log("ok", res));
+  }
 
   const emailError = errors.email?.message;
   const passwordError = errors.password?.message;
@@ -149,14 +154,13 @@ export function Cadastro() {
 
             <div className="mt-6 flex flex-col">
               <div>
-              <Link to="/login">
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-sky-800 bg-sky-200 hover:bg-sky-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800"
-                >
-                  Entrar
-                  
-                </button>
+                <Link to="/login">
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-sky-800 bg-sky-200 hover:bg-sky-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800"
+                  >
+                    Entrar
+                  </button>
                 </Link>
               </div>
             </div>

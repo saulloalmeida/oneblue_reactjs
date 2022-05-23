@@ -1,34 +1,47 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import { Alert } from "./Alert";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import * as yup from "yup";
 import { api } from "../services/api";
+import { Alert } from "./Alert";
 interface IFormInputs {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
-const schema = yup.object({
-  email: yup.string().email("Email inválido").required("Preenchimento do email é obrigatório"),
-  password: yup.string().required("Preenchimento da senha é obrigatório"),
-}).required();
+//validação do formulário com Yup
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .email("Email inválido")
+      .required("Preenchimento do email é obrigatório"),
+    password: yup.string().required("Preenchimento da senha é obrigatório"),
+  })
+  .required();
 
 export function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
-    resolver: yupResolver(schema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(schema),
   });
-  
+
+  //Envio dados para a api.
   async function onSubmit(data: IFormInputs) {
-    await api.post('/login',{
-      name:data.email,
-      password:data.password
-    }).then((res)=>console.log("ok",res))
-  } 
-  const emailError = errors.email?.message
-  const passwordError = errors.password?.message
-  
+    await api
+      .post("/login", {
+        name: data.email,
+        password: data.password,
+      })
+      .then((res) => console.log("ok", res));
+  }
+
+  const emailError = errors.email?.message;
+  const passwordError = errors.password?.message;
+
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -44,8 +57,10 @@ export function Login() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          {(errors.email || errors.password) && <Alert emailError={emailError} passwordError={passwordError}/>}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">
+          {(errors.email || errors.password) && (
+            <Alert emailError={emailError} passwordError={passwordError} />
+          )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">
             <div>
               <label
                 htmlFor="email"
@@ -55,7 +70,7 @@ export function Login() {
               </label>
               <div className="mt-1">
                 <input
-                {...register("email")} 
+                  {...register("email")}
                   id="email"
                   name="email"
                   type="text"
@@ -74,7 +89,7 @@ export function Login() {
               </label>
               <div className="mt-1">
                 <input
-                {...register("password")} 
+                  {...register("password")}
                   id="password"
                   name="password"
                   type="password"
@@ -109,12 +124,12 @@ export function Login() {
             <div className="mt-6 flex flex-col">
               <div>
                 <Link to="/cadastro">
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-sky-800 bg-sky-200 hover:bg-sky-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800"
-                >
-                  Cadastre-se
-                </button>
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-sky-800 bg-sky-200 hover:bg-sky-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-800"
+                  >
+                    Cadastre-se
+                  </button>
                 </Link>
               </div>
             </div>
