@@ -10,29 +10,29 @@
 
 > Projeto realizado para concorrer a vaga na empresa One Blue, desenvolvido com as tecnologias ReactJS, Typescript, Yup, React hook form, TailwindCSS, React Router e Axios.
 
-### 🏠 [Homepage](http://localhost:3000)
+### 🏠 [Homepage: http://localhost:3000](http://localhost:3000)
 
-### ✨ [Demo](http://localhost:3000)
+### ✨ [Demo: http://localhost:3000](http://localhost:3000)
 
 ## Necessário rodar o projeto do backend proposto para que este funcione corretamente, link abaixo:
 
 ### 🏠 [Backend](https://github.com/saulloalmeida/testing_react_js_oneblue)
 
-## Install
+## Comandos para instalação
 
 ```sh
 npm install
 yarn
 ```
 
-## Usage
+## Comandos para utilização
 
 ```sh
 npm run dev 
 yarn dev
 ```
 
-## Author
+## Desenvolvedor
 
 👤 **Saullo Almeida**
 
